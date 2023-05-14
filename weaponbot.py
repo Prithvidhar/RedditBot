@@ -20,13 +20,12 @@ else:
         post_replied = post_replied.split('\n')
         post_replied = list(filter(None,post_replied))
 
-for submission in subreddit.hot(limit=5):
+for submission in subreddit.hot(limit=1):
+    submission.comments.replace_more(limit=None)
     if submission.id not in post_replied:
         #Checking for comment
-        if re.search("i love python",submission.title,re.IGNORECASE):
-            submission.reply("Hi, just replying to your post. Hope you have nice day! Beep Boop")
-            print('replying to', submission.title)
-            post_replied.append(submission.id)
+        for comment in submission.comments.list():
+            print(comment.body)
 # Writing replied post 
 with open("posts_replied_to.txt", "w") as f:
     for post_id in post_replied:
