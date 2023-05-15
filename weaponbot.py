@@ -17,11 +17,11 @@ subreddit = reddit.subreddit("pythonforengineers")
 # Writing replied post to mentioned
 for mention in reddit.inbox.mentions(limit =10):
     # print(f'{mention.body} is the body of the mention')
-    if mention.new:
+    if not mention.new:
         continue
     weapon = mention.body.replace('u/Tf2WeaponStatsBot','')
     URL = 'https://wiki.teamfortress.com/wiki/{}'.format(weapon)
-    output='{} Stats:\nPostive attributes:\n'.format(weapon)
+    output='{} Stats:\n\nPositive attributes:\n'.format(weapon)
     print(URL)
     page = requests.get(URL)
     soup = BeautifulSoup(page.content,'html.parser')
@@ -39,6 +39,7 @@ for mention in reddit.inbox.mentions(limit =10):
         output+='- '+n.text+'\n'
     print(output)
     mention.reply(output)
+    mention.mark_read()
     
 
 
