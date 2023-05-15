@@ -8,26 +8,38 @@ import praw
 import pdb
 import re
 import os
+import requests
+from bs4 import BeautifulSoup
+
 reddit = praw.Reddit('bot1')
-
+output = ''
 subreddit = reddit.subreddit("pythonforengineers")
-#storing replied posts in list
-if not os.path.isfile("posts_replied.txt"):
-    post_replied = []
-else:
-    with open('posts_replied.txt','r') as f:
-        post_replied = f.read()
-        post_replied = post_replied.split('\n')
-        post_replied = list(filter(None,post_replied))
+# Writing replied post to mentioned
+for mention in reddit.inbox.mentions(limit =10):
+    # print(f'{mention.body} is the body of the mention')
+    if mention.new:
+        continue
+    weapon = mention.body.replace('u/Tf2WeaponStatsBot','')
+    URL = 'https://wiki.teamfortress.com/wiki/{}'.format(weapon)
+    output='{} Stats:\nPostive attributes:\n'.format(weapon)
+    print(URL)
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content,'html.parser')
+    results = soup.find(id='right-sidebar')
+    # Finding positive attributes
+    # print(results.prettify)
+    tooltip = results.find('td', class_='loadout-tooltip-container')
+    backpack = tooltip.find('div',class_ = 'tfwiki-backpack-item')
+    positive_atts = backpack.find_all('span',class_= 'att_positive')
+    negative_atts = backpack.find_all('span',class_= 'att_negative')
+    for p in positive_atts:
+        output+= '- '+ p.text + '\n'
+    output+= '\n\nNegative attributes:\n'
+    for n in negative_atts:
+        output+='- '+n.text+'\n'
+    print(output)
+    mention.reply(output)
+    
 
-for submission in subreddit.hot(limit=1):
-    submission.comments.replace_more(limit=None)
-    if submission.id not in post_replied:
-        #Checking for comment
-        for comment in submission.comments.list():
-            print(comment.body)
-# Writing replied post 
-with open("posts_replied_to.txt", "w") as f:
-    for post_id in post_replied:
-        f.write(post_id + "\n")
+
 
