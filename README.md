@@ -21,7 +21,7 @@ python3 weaponbot.py
 Running the command will have the bot check its Reddit account for any mentions. If it finds any, it will look at the first word after its mention and scrape the details of the weapon from the TF2 Wiki
 
 ```
-u/Tf2WeaponsBot Sandvich
+u/Tf2WeaponStatsBot Sandvich
 (Yes, this is a real weapon in the game)
 ```
 
