@@ -6,7 +6,7 @@ A Reddit bot that responds to users when mentioned in the PythonforEngineer subr
 
 ## Purpose
 
-Currently, there are over 209 weapons in the class-based first-person shooter video game Team Fortress 2 (TF2). Oftentimes, when discussing the game it becomes necessary to obtain the statistics of a particular weapon in the to discuss its usefull in certain game scenario.
+Currently, there are over 209 weapons in the class-based first-person shooter video game Team Fortress 2 (TF2). Oftentimes, when discussing the game it becomes necessary to obtain the statistics of a particular weapon in the to discuss its useful in certain game scenario.
 
 This tool can be used to help people on Reddit quickly gather this information in the form of a reply.
 
@@ -18,11 +18,29 @@ The code is stored in a single Python file that can be run on any machine assumi
 python3 weaponbot.py
 ```
 
-Running the command will have the bot check its Reddit account for any mentions. If it finds any, it will look at the first word after its mention and scrape the details of the weapon from the TF2 Wiki
+Running the command will have the bot check its Reddit account for any mentions. If it finds any, it will look at the first word after its mention and scrape the details of the weapon from the TF2 Wiki. The user who mentioned the bot will then provide the positive and negative attributes of the weapon. Here is an [example](https://www.reddit.com/r/pythonforengineers/comments/13ih385/test_for_tf2weaponsstats/) of the command 
 
+### Example mention
 ```
-u/Tf2WeaponStatsBot Sandvich
-(Yes, this is a real weapon in the game)
+u/Tf2WeaponStatsBot Sticky Jumper
+
+Reply from bot:
+
+Sticky Jumper Stats: Positive attributes:
+
+ +200% max secondary ammo on wearer
+
+ No self inflicted blast damage taken
+
+Negative attributes:
+
+ -100% damage penalty
+
+ No random critical hits
+
+ -6 max stickybombs out
+
+ Wearer cannot carry the intelligence briefcase or PASS Time JACK
 ```
 
 ## Challenges and experiences
